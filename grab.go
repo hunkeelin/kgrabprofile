@@ -28,15 +28,15 @@ func GrabProfile(profile string) (*credentials.Credentials, error) {
 			cp = string(bytes.Trim(bytes.Trim(line, "["), "]"))
 		case bytes.HasPrefix(line, []byte("aws_access_key_id")):
 			tmp := credMap[cp]
-			tmp.awsAccessKeyId = string(bytes.TrimLeft(line, "aws_access_key_id = "))
+			tmp.awsAccessKeyId = string(bytes.Replace(line, []byte("aws_access_key_id = "), []byte(""), -1))
 			credMap[cp] = tmp
 		case bytes.HasPrefix(line, []byte("aws_secret_access_key")):
 			tmp := credMap[cp]
-			tmp.awsSecretAccessKey = string(bytes.TrimLeft(line, "aws_secret_access_key = "))
+			tmp.awsSecretAccessKey = string(bytes.Replace(line, []byte("aws_secret_access_key = "), []byte(""), -1))
 			credMap[cp] = tmp
 		case bytes.HasPrefix(line, []byte("aws_session_token")):
 			tmp := credMap[cp]
-			tmp.awsSessionToken = string(bytes.TrimLeft(line, "aws_session_token = "))
+			tmp.awsSessionToken = string(bytes.Replace(line, []byte("aws_session_token = "), []byte(""), -1))
 			credMap[cp] = tmp
 		default:
 			continue
